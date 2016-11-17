@@ -18,8 +18,13 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.links = [];
         this.selectedTab = null;
         this.loaded = false;
+        this.allowTabSwipe = 'on';
 
         function moveTab(d) {
+            if (main.allowTabSwipe == 'off')
+            {
+                return;
+            }
             var len = main.tabs.length;
             var i = parseInt($location.path().substr(1));
             if (len > 1) {
@@ -61,6 +66,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         events.connect(function (ui, done) {
             main.tabs = ui.tabs;
             main.links = ui.links;
+            main.allowTabSwipe = ui.allowTabSwipe;
             $document[0].title = ui.title;
 
             var prevTabIndex = parseInt($location.path().substr(1));

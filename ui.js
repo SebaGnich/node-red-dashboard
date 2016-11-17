@@ -27,7 +27,8 @@ var serveStatic = require('serve-static'),
 
 var baseConfiguration = {
     title: "Node-RED Dashboard",
-    theme: "theme-light"
+    theme: "theme-light",
+    allowTabSwipe: 'on'
 };
 
 var tabs = [];
@@ -237,7 +238,8 @@ function updateUi(to) {
         to.emit('ui-controls', {
             title: baseConfiguration.title,
             tabs: tabs,
-            links: links
+            links: links,
+            allowTabSwipe: baseConfiguration.allowTabSwipe
         });
         updateUiPending = false;
     });
@@ -341,8 +343,9 @@ function addLink(name, link, icon, order, target) {
     }
 }
 
-function addBaseConfig(title,theme) {
+function addBaseConfig(title, theme, allowTabSwipe) {
     if (title) { baseConfiguration.title = title; }
     if (theme) { baseConfiguration.theme = theme; }
+    if (allowTabSwipe) { baseConfiguration.allowTabSwipe = allowTabSwipe; }
     updateUi();
 }

@@ -131,7 +131,8 @@ RED.nodes.registerType('ui_base',{
     category: 'config',
     defaults: {
         name: {value: ''},
-        theme: {value: ''}
+        theme: {value: ''},
+        allowTabSwipe: {value: 'on'}
     },
     hasUsers: false,
     paletteLabel: 'Dashboard',
@@ -162,6 +163,7 @@ RED.nodes.registerType('ui_base',{
                         type: "ui_base",
                         name: "Node-RED Dashboard",
                         theme: "theme-light",
+                        allowTabSwipe: "on",
                         url: 'ui',
                         users:[]
                     }
@@ -208,6 +210,23 @@ RED.nodes.registerType('ui_base',{
                 }
             })
             .appendTo(divTheme);
+
+        // AllowTabSwipe
+        var divAllowTabSwipe = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
+        $('<label>').html('Allow Tab Swipe').appendTo(divAllowTabSwipe);
+        $('<input type="checkbox" id="nr-db-field-allowtabswipe" />').css({'position': 'absolute', 'top': '0', 'right': '0', 'width': 'auto'})
+            .change(function() {
+                var thisVal = ($(this).prop('checked')) ? 'on' : 'off';
+                if (!globalDashboardNode || globalDashboardNode.allowTabSwipe !== thisVal) {
+                    ensureDashboardNode(true);
+                    globalDashboardNode.allowTabSwipe = thisVal;
+
+                    $(this).prop('checked', (thisVal != 'off') ? true : false);
+
+                    RED.nodes.dirty(true);
+                }
+            })
+            .appendTo(divAllowTabSwipe);
 
         var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
         $('<label>').html('Tabs').appendTo(divTabs);
@@ -828,6 +847,7 @@ RED.nodes.registerType('ui_base',{
             if (globalDashboardNode) {
                 $("#nr-db-field-title").val(globalDashboardNode.name);
                 $("#nr-db-field-theme").val(globalDashboardNode.theme);
+                $("#nr-db-field-allowtabswipe").prop('checked', (globalDashboardNode.allowTabSwipe == 'on') ? true : false);
                 // $("#nr-db-field-url").val(globalDashboardNode.url);
             }
             awaitingGroups = {};
