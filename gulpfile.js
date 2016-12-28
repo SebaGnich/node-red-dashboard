@@ -1,23 +1,23 @@
 
 var
-    gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    fs = require('fs'),
-    ghtmlSrc = require('gulp-html-src'),
-    gutil = require('gulp-util'),
-    gulpif = require('gulp-if'),
-    header = require("gulp-header"),
-    htmlreplace = require('gulp-html-replace'),
-    manifest = require('gulp-manifest'),
-    minifyCss = require('gulp-clean-css'),
-    minifyHTML = require('gulp-htmlmin'),
-    path = require('path'),
-    spawn = require('child_process').spawn,
-    streamqueue = require('streamqueue'),
+    gulp          = require('gulp'),
+    concat        = require('gulp-concat'),
+    fs            = require('fs'),
+    ghtmlSrc      = require('gulp-html-src'),
+    gutil         = require('gulp-util'),
+    gulpif        = require('gulp-if'),
+    header        = require("gulp-header"),
+    htmlreplace   = require('gulp-html-replace'),
+    manifest      = require('gulp-manifest'),
+    minifyCss     = require('gulp-clean-css'),
+    minifyHTML    = require('gulp-htmlmin'),
+    path          = require('path'),
+    spawn         = require('child_process').spawn,
+    streamqueue   = require('streamqueue'),
     templateCache = require('gulp-angular-templatecache'),
-    uglify = require('gulp-uglify'),
-    jshint = require('gulp-jshint'),
-    jscs = require('gulp-jscs');
+    uglify        = require('gulp-uglify'),
+    jshint        = require('gulp-jshint'),
+    jscs          = require('gulp-jscs');
 
 gulp.task('default', ['manifest']);
 
@@ -31,7 +31,6 @@ gulp.task('manifest', ['build'], function() {
     gulp.src(['dist/*','dist/css/*','dist/js/*','dist/fonts/*'], { base: 'dist/' })
     .pipe(manifest({
         hash: true,
-        //preferOnline: true,
         network: ['*'],
         filename: 'dashboard.appcache',
         exclude: 'dashboard.appcache'
